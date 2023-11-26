@@ -1,1 +1,1 @@
-rootProject.name = "DONIX"
+rootProject.name = "donix"
