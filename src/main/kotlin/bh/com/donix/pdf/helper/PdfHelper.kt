@@ -1,7 +1,7 @@
 package bh.com.donix.pdf.helper
 
 
-import bh.com.donix.logInfo
+import bh.com.donix.extensions.logInfo
 import bh.com.donix.pdf.constants.PdfConstants.Companion.PAGE_FOOTER_NUMBER_FONT
 import bh.com.donix.pdf.constants.PdfConstants.Companion.PAGE_FOOTER_TEXT_FONT
 import com.itextpdf.text.*

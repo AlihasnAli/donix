@@ -1,6 +1,6 @@
 package bh.com.donix.pdf.model
 
-import bh.com.donix.logInfo
+import bh.com.donix.extensions.logInfo
 import bh.com.donix.pdf.constants.PdfConstants.Companion.DEFAULT_A4_DOCUMENT
 import bh.com.donix.pdf.constants.PdfConstants.Companion.SMOKE_WHITE_COLOR
 import bh.com.donix.pdf.constants.PdfConstants.Companion.TABLE_HEADER_FONT

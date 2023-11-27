@@ -1,7 +1,7 @@
 package bh.com.donix.pdf.services
 
 
-import bh.com.donix.logInfo
+import bh.com.donix.extensions.logInfo
 import bh.com.donix.pdf.model.DonixPdf
 import org.springframework.stereotype.Service
 import java.io.FileOutputStream
