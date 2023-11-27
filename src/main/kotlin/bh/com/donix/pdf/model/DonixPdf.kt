@@ -1,6 +1,7 @@
 package bh.com.donix.pdf.model
 
 import bh.com.donix.extensions.logInfo
+import bh.com.donix.pdf.constants.PdfConstants
 import bh.com.donix.pdf.constants.PdfConstants.Companion.DEFAULT_A4_DOCUMENT
 import bh.com.donix.pdf.constants.PdfConstants.Companion.SMOKE_WHITE_COLOR
 import bh.com.donix.pdf.constants.PdfConstants.Companion.TABLE_HEADER_FONT
@@ -11,6 +12,7 @@ import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfPageEventHelper
 import com.itextpdf.text.pdf.PdfWriter
 import org.springframework.stereotype.Component
+import java.io.FileInputStream
 import java.io.OutputStream
 
 @Component
@@ -27,7 +29,7 @@ class DonixPdf(
         ("Setting pdf document [events]").logInfo()
         writer.pageEvent = object : PdfPageEventHelper() {
             override fun onEndPage(writer: PdfWriter?, document: Document?) {
-                pdfHelper.addPageFooter(writer!!)
+                setPdfPageFooter(writer!!)
             }
 
             override fun onOpenDocument(writer: PdfWriter?, document: Document?) {
@@ -45,7 +47,46 @@ class DonixPdf(
     override fun setPdfElements(writer: PdfWriter, doc: Document) {
         ("Setting pdf document [elements]").logInfo()
         pdfHelper.addBackgroundColor(writer, doc, SMOKE_WHITE_COLOR)
-        pdfHelper.addElements(doc, mutableListOf(getStatTable()))
+
+        val image = Image.getInstance(FileInputStream("src/main/resources/logo.png").readAllBytes())
+        image.scaleToFit(40F, 40F)
+
+        image.borderWidth = 1F
+        image.borderColor = BaseColor.RED
+
+        val logo = pdfHelper.createTable(1, PdfPCell(image).apply {
+            setBorderColor(BaseColor.RED)
+            setBorderWidth(3F)
+        }).apply {
+            setWidthPercentage(100F)
+        }
+//        PdfPTable(1).apply {
+//            ad
+//        }
+
+
+//        pdfHelper.addTableCells(, )
+
+        pdfHelper.addElements(doc, mutableListOf(getStatTable(),image ))
+    }
+
+    override fun setPdfPageFooter(writer: PdfWriter) {
+        val pageNumber =
+            PdfPCell(Phrase("Page " + writer.pageNumber, PdfConstants.PAGE_FOOTER_NUMBER_FONT)).apply {
+                border = PdfPCell.NO_BORDER
+                horizontalAlignment = Element.ALIGN_RIGHT
+            }
+
+        val footerContent =
+            PdfPCell(Phrase("This is a sample footer.", PdfConstants.PAGE_FOOTER_TEXT_FONT)).apply {
+                border = PdfPCell.NO_BORDER
+                horizontalAlignment = Element.ALIGN_LEFT
+            }
+
+        PdfPTable(2).apply {
+            totalWidth = 530f
+            pdfHelper.addTableCells(this, mutableListOf(footerContent, pageNumber))
+        }.writeSelectedRows(0, -1, 30f, 50f, writer.directContent)
     }
 
     fun getStatTable(): PdfPTable {
@@ -61,13 +102,7 @@ class DonixPdf(
             PdfPCell(Phrase("3  col row", Font(Font.FontFamily.HELVETICA, 12F, Font.NORMAL, BaseColor(34, 34, 34)))),
         )
 
-
-        return PdfPTable(3).apply {
-            pdfHelper.addTableCells(this, headers)
-            for (i in 1..60) {
-                pdfHelper.addTableCells(this, row)
-            }
-        }
+        return pdfHelper.createTable(3, mutableListOf(headers, row))
     }
 
 }

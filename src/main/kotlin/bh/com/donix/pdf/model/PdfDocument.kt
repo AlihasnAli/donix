@@ -24,4 +24,6 @@ abstract class PdfDocument {
 
     abstract fun setPdfElements(writer: PdfWriter, doc: Document)
 
+    abstract fun setPdfPageFooter(writer: PdfWriter)
+
 }
