@@ -1,4 +1,4 @@
-pipeline {
+node ('Built-In Node') {
     agent {
         label 'main'
     }
