@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component
 
 
 @Component
-class PdfHelper : PdfTableHelperImpl() {
+class PdfHelper
+//    : PdfTableHelperImpl()
+{
 
     fun addBackgroundColor(writer: PdfWriter, doc: Document, backgroundColor: BaseColor) {
         ("adding background color to pdf doc ...").logInfo()

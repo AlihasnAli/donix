@@ -14,7 +14,7 @@ class PdfService(
 
     fun createPdf() {
         ("processing pdf creation request ..").logInfo()
-        donixPdf.createDocument(FileOutputStream("src/main/resources/DoNix.pdf"))
+//        donixPdf.createDocument(FileOutputStream("src/main/resources/DoNix.pdf"))
     }
 
 
