@@ -3,7 +3,7 @@ pipeline {
         label 'master'
     }
     stages {
-        stage('Build Stage') {
+        stage('Build Stage 1') {
             steps {
                 sh './gradlew clean build'
             }
