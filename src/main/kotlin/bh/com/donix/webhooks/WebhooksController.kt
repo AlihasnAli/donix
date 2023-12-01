@@ -12,7 +12,7 @@ class WebhooksController {
 
     @PostMapping("/cvs-push")
     fun pushEvent(payload: String){
-        ("Received push event ").logInfo()
+        ("Received push events ").logInfo()
         (payload).logInfo()
     }
 }
